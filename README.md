@@ -6,32 +6,13 @@ Arthantar is a sophisticated multi-layered system designed to enhance translatio
 
 ### Key Features
 
-1. **Gender Identification**
-   - Utilizes the **FCoref module** for identifying gendered pronouns and assigning genders to entities based on context.
-   - Employs predefined sets of male and female pronouns to infer gender through analysis of related pronoun clusters.
-   - Integrates the **mixtral-8x7b-32768 model** via the Groq API as a backup, predicting gender based on contextual clues like entity names and roles.
+A sophisticated multi-layered approach to improve translation by utilizing a combination of gender identification, coreference resolution, and knowledge graph (KG) generation. The core of this approach relies on multiple technologies and models, each serving a specific function. For gender identification, I used the FastCoref module, a coreference resolution tool that identifies gendered pronouns and assigns genders to entities based on context. The module works by analyzing the text and identifying clusters of related pronouns, using predefined sets of male and female pronouns to determine the likely gender of each entity. I tested four different coreference models and selected the one that best resolved ambiguous pronouns and determined gender accurately, with a focus on proper noun gender inference.
 
-2. **Coreference Resolution**
-   - Resolves ambiguous pronouns and determines entity genders accurately.
-   - Analyzes clusters of related pronouns and assigns genders by leveraging a carefully tested coreference model.
-   - Ensures precision with proper noun gender inference, focusing on entity context.
+To further enhance the translation context, I incorporated an advanced large language model (LLM) using the Groq API. For gender identification when coreference resolution fails, I used the mixtral-8x7b-32768 model, which is employed as a backup to predict the likely gender of entities, specifically persons, based on contextual clues such as the name or role described. If the coreference model doesn’t provide a clear gender, the system sends a prompt to the LLM, asking it to analyze the entity name and its type (e.g., a person) and predict its gender. This dual-layered approach ensures that gender is identified accurately, even in cases where coreference models face difficulties, such as when pronouns are not explicitly mentioned.
 
-3. **Knowledge Graph Generation**
-   - Leverages the **LLMGraphTransformer library** to create knowledge graphs encapsulating entities, relationships, and gender data.
-   - Converts input text into graph documents enriched with context, nodes, and relationships.
-   - Ensures integration of coreference and LLM-derived gender information into the KG for enhanced translation context.
+For the knowledge graph generation, I used the LLMGraphTransformer library, which facilitates the creation of a knowledge graph that encapsulates entities and their relationships. The knowledge graph is fed into the mixtral-8x7b-32768 model, which processes the input text and extracts the relevant information to generate graph documents. This graph not only includes the entities but also incorporates gender data and relationships between them. The knowledge graph is built by first converting the input text into graph documents, then creating nodes and relationships using the transformer’s output. These nodes are enriched with the gender information identified by the coreference resolution or LLM. The knowledge graph plays a crucial role in providing contextual information to the translation process, ensuring that the translation model can handle gender nuances and understand the relationships between entities, leading to a more accurate translation.
 
-4. **Multi-Level Fallback System**
-   - Employs a robust fallback hierarchy to maintain functionality in case of model failures:
-     - **Coreference Model**: Primary resolution of gender and entity relationships.
-     - **LLM (mixtral-8x7b-32768)**: Backup for unresolved genders or entities.
-     - **spaCy’s NLP Capabilities**: Backup KG generation using NER and dependency parsing with the **en_core_web_sm** model.
-     - **NetworkX**: Constructs a syntactic dependency-based directed graph for additional context.
-     - **Basic Entity Extraction**: Extracts entities based on capitalization for minimal but meaningful context.
-
-5. **Fallback Exception Handling**
-   - Detects and handles errors at each level of processing.
-   - Ensures a semantically meaningful graph is always available, with progressively simplified information as needed.
+In case both the coreference and LLM fail to provide sufficient data, a more sophisticated backup method is employed using spaCy's natural language processing capabilities. This backup knowledge graph is built using spaCy's named entity recognition (NER) and dependency parsing features. The system extracts named entities (such as persons, organizations, and locations) and their relationships through syntactic dependency analysis. Using spaCy's en_core_web_sm model, the system identifies entity types, tracks their mentions throughout the text, and establishes meaningful relationships based on sentence structure. The NetworkX library is used to create a directed graph where entities are connected based on their syntactic relationships rather than just linear sequence. If the graph documents from the LLMGraphTransformer are empty or the coreference fails to resolve entities, this spaCy-enhanced backup structure is used. The system implements multi-level fallback through exception handling: if the coreference model encounters errors, it defaults to the LLM; if the LLM fails, it uses the spaCy-based graph generation; and if spaCy processing fails, it falls back to a basic entity extraction using capitalized words. This ensures that, regardless of the failure point, a semantically meaningful graph is always available to provide contextual information for the translation model, with each fallback level maintaining decreasing but still useful levels of sophistication.
 
 ### Workflow
 
