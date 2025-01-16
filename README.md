@@ -39,10 +39,10 @@ Arthantar is a sophisticated multi-layered system designed to enhance translatio
 
 ### Technologies Used
 
-- **Coreference Resolution**: FCoref module.
-- **Large Language Models**: mixtral-8x7b-32768 model (Groq API).
-- **Knowledge Graph**: LLMGraphTransformer library, spaCy’s en_core_web_sm.
-- **Dependency Graphs**: NetworkX.
+- **Coreference Resolution**: FCoref module and mixtral-8x7b-32768 as backup.
+- **Large Language Models**: mixtral-8x7b-32768 model for knowledge graph and gender backup; Llama-3.1-8b for translation.
+- **Knowledge Graph**: LLMGraphTransformer library.
+- **Dependency Graphs**: NetworkX, SpaCy’s en_core_web_sm.
 - **Error Handling**: Multi-level fallback hierarchy ensuring robust output generation.
 
 
