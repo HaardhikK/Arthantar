@@ -35,17 +35,7 @@ Arthantar is a sophisticated multi-layered system designed to enhance translatio
 
 ### Workflow
 
-1. **Input Text Analysis**:
-   - Coreference resolution identifies gendered pronouns and relationships.
-   - LLM predicts genders and relationships where coreference resolution fails.
-2. **Knowledge Graph Construction**:
-   - LLMGraphTransformer creates nodes and edges enriched with gender and contextual data.
-   - SpaCy’s NER and dependency parsing provide a backup graph if LLMGraphTransformer fails.
-3. **Translation Output**:
-   - Knowledge graph context ensures nuanced, accurate translations.
-   - Handles gender nuances and entity relationships effectively.
-4. **Error Handling and Fallbacks**:
-   - Automatically transitions between coreference models, LLM, and spaCy-based backup mechanisms.
+![Workflow Diagram](images/workflow.png)
 
 ### Technologies Used
 
