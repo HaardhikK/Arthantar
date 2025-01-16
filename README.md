@@ -35,7 +35,7 @@ Arthantar is a sophisticated multi-layered system designed to enhance translatio
 
 ### Workflow
 
-![Workflow Diagram](images/workflow.png)
+![Workflow Diagram](images/workflow_arthantar.png)
 
 ### Technologies Used
 
