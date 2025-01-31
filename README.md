@@ -1,6 +1,6 @@
 # Arthantar
 
-## Contextual Translation Integrating Coreference Analysis, Large Language Models, and Knowledge Graphs
+## Contextual Translation Integrating Coreference Analysis, Large Language Models, Reinforcement Learning and Knowledge Graphs
 
 Arthantar is a sophisticated multi-layered system designed to enhance translation accuracy by integrating gender identification, coreference resolution, and knowledge graph (KG) generation. This approach ensures accurate and contextually relevant translations by leveraging cutting-edge technologies and fallback mechanisms.
 
